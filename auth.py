@@ -35,7 +35,7 @@ def login():
         password = getpass("What is Your Password? \n")
 
         user = database.authenticated_user(account_number_from_user, password)
-        print(user)
+        database.create_login_session(account_number_from_user)
         if user:
             bank_operation(user)
 
@@ -151,6 +151,7 @@ def get_current_balance(user_details):
 
 
 def logout():
+    database.delete_login_session(account_number_from_user)
     login()
 
 

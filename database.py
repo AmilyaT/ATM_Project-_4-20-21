@@ -151,19 +151,24 @@ def authenticated_user(account_number, password):
 import os
 from datetime import datetime as dt
 
-user_session_path = "auth_session/"
+user_session_path = "data/auth_session/"
 
 
 # create login session immediately a user logs in
 def create_login_session(account_number):
-    file = open(user_session_path + str(account_number) + "_session" + ".txt", 'x')
-    date_time = dt.now()
-    logged_in_date = date_time.strftime("%d-%b-%Y")
-    logged_in_time = date_time.strftime("%H:%M:%S.%p")
-    login_details = str(account_number) + " logged on " + str(logged_in_date + " at " + str(logged_in_time))
-    file.write(user_session_path)
-    print("Session Successfully Created")
-    file.close()
+
+    try:
+        file = open(user_session_path + str(account_number) + "_session" + ".txt", 'x')
+        date_time = dt.now()
+        logged_in_date = date_time.strftime("%d-%b-%Y")
+        logged_in_time = date_time.strftime("%H:%M:%S.%p")
+        login_details = str(account_number) + " logged on " + str(logged_in_date + " at " + str(logged_in_time))
+        file.write(login_details)
+
+        print("Session Successfully Created")
+        file.close()
+    except FileExistsError:
+        pass
 
 
 def delete_login_session(account_number):
